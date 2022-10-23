@@ -11,7 +11,7 @@ FileUtils.chdir APP_ROOT do
   cmd = "gem install bundler --conservative"
   puts "Executing #{cmd}"
   system cmd
-  system("bundle check") || system!("bundle install")
+  system("bundle check") || system("bundle install")
 
   puts "\n== Executing yarn =="
   system("bin/yarn")
