@@ -1,0 +1,16 @@
+{
+  "name": "neeto-course-src",
+  "version": "1.0.0",
+  "description": "Template for course data repo structure for neetoCourse",
+  "main": "index.js",
+  "repository": "git@github.com:bigbinary/neeto-course-src.git",
+  "author": "<akash.srivastava@bigbinary.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "husky": "^8.0.1"
+  },
+  "scripts": {
+    "prepare": "husky install",
+    "validate": "node validate.js"
+  }
+}

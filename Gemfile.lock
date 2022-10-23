@@ -1,0 +1,14 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    rake (11.3.0)
+
+PLATFORMS
+  arm64-darwin-20
+  x86_64-darwin-21
+
+DEPENDENCIES
+  rake (~> 11.2, >= 11.2.2)
+
+BUNDLED WITH
+   2.3.24
