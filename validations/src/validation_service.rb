@@ -12,6 +12,8 @@ require_relative './config_rules/chapters_data_matches_chapter_directories'
 require_relative './config_rules/page_title_present'
 require_relative './config_rules/page_slug_present'
 require_relative './config_rules/page_type_present'
+require_relative './config_rules/page_slugs_unique'
+require_relative './config_rules/pages_data_matches_page_files'
 
 module Src
   class ValidationService
@@ -91,6 +93,9 @@ module Src
             validate_page_slug_present(page_data, page_index, course_base_directory_name, chapter_base_directory_name)
             validate_page_type_present(page_data, page_index, course_base_directory_name, chapter_base_directory_name)
           end
+
+          validate_uniqueness_of_page_slugs(pages_config, course_base_directory_name, chapter_base_directory_name)
+          validate_pages_data_matches_page_files(pages_config, page_files, course_base_directory_name, chapter_base_directory_name)
         end
       end
     end
@@ -175,6 +180,14 @@ module Src
 
     def validate_page_type_present(page_data, page_index, course_base_directory_name, chapter_base_directory_name)
       Src::ConfigRules::PageTypePresent.new(page_data, page_index, course_base_directory_name, chapter_base_directory_name).process
+    end
+
+    def validate_uniqueness_of_page_slugs(pages_data, course_base_directory_name, chapter_base_directory_name)
+      Src::ConfigRules::PageSlugsUnique.new(pages_data, course_base_directory_name, chapter_base_directory_name).process
+    end
+
+    def validate_pages_data_matches_page_files(pages_data, page_files, course_base_directory_name, chapter_base_directory_name)
+      Src::ConfigRules::PagesDataMatchesPageFiles.new(pages_data, page_files, course_base_directory_name, chapter_base_directory_name).process
     end
   end
 end
