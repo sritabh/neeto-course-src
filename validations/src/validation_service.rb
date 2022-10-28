@@ -9,6 +9,9 @@ require_relative './config_rules/chapter_name_present'
 require_relative './config_rules/chapter_slug_present'
 require_relative './config_rules/chapter_slugs_unique'
 require_relative './config_rules/chapters_data_matches_chapter_directories'
+require_relative './config_rules/page_title_present'
+require_relative './config_rules/page_slug_present'
+require_relative './config_rules/page_type_present'
 
 module Src
   class ValidationService
@@ -77,6 +80,18 @@ module Src
         end
         validate_uniqueness_of_chapter_slugs(chapters_config, course_base_directory_name)
         validate_chapters_data_matches_chapter_directories(chapters_config, chapter_directories, course_base_directory_name)
+
+        chapter_directories.each do |chapter_directory|
+          pages_config = load_pages_config(chapter_directory, course_base_directory_name)
+          page_files = Dir[File.join(chapter_directory, "pages", "*.md")].select { |f| File.file? f }
+
+          chapter_base_directory_name = File.basename(chapter_directory)
+          pages_config.each_with_index do |page_data, page_index|
+            validate_page_title_present(page_data, page_index, course_base_directory_name, chapter_base_directory_name)
+            validate_page_slug_present(page_data, page_index, course_base_directory_name, chapter_base_directory_name)
+            validate_page_type_present(page_data, page_index, course_base_directory_name, chapter_base_directory_name)
+          end
+        end
       end
     end
 
@@ -91,6 +106,19 @@ module Src
       YAML.load_file(chapters_config_path)
     rescue Psych::SyntaxError => e
       raise "Error parsing chapters.yml in #{course_base_directory_name}: #{e}"
+    end
+
+    def load_pages_config(chapter_directory, course_base_directory_name)
+      pages_config_path = File.join(chapter_directory, "pages.yml")
+      chapter_base_directory_name = File.basename(chapter_directory)
+
+      if !File.exist?(pages_config_path)
+        raise "pages.yml does not exist in #{chapter_base_directory_name} in #{course_base_directory_name}"
+      end
+
+      YAML.load_file(pages_config_path)
+    rescue Psych::SyntaxError => e
+      raise "Error parsing pages.yml in #{chapter_base_directory_name} in #{course_base_directory_name}: #{e}"
     end
 
     def validate_course_name_present(course_data, course_index)
@@ -135,6 +163,18 @@ module Src
 
     def validate_chapters_data_matches_chapter_directories(chapters_data, chapter_directories, course_base_directory_name)
       Src::ConfigRules::ChaptersDataMatchesChapterDirectories.new(chapters_data, chapter_directories, course_base_directory_name).process
+    end
+
+    def validate_page_title_present(page_data, page_index, course_base_directory_name, chapter_base_directory_name)
+      Src::ConfigRules::PageTitlePresent.new(page_data, page_index, course_base_directory_name, chapter_base_directory_name).process
+    end
+
+    def validate_page_slug_present(page_data, page_index, course_base_directory_name, chapter_base_directory_name)
+      Src::ConfigRules::PageSlugPresent.new(page_data, page_index, course_base_directory_name, chapter_base_directory_name).process
+    end
+
+    def validate_page_type_present(page_data, page_index, course_base_directory_name, chapter_base_directory_name)
+      Src::ConfigRules::PageTypePresent.new(page_data, page_index, course_base_directory_name, chapter_base_directory_name).process
     end
   end
 end
