@@ -5,6 +5,10 @@ require_relative './config_rules/course_published_present'
 require_relative './config_rules/course_image_exists'
 require_relative './config_rules/course_slugs_unique'
 require_relative './config_rules/courses_metadata_matches_course_directories'
+require_relative './config_rules/chapter_name_present'
+require_relative './config_rules/chapter_slug_present'
+require_relative './config_rules/chapter_slugs_unique'
+require_relative './config_rules/chapters_data_matches_chapter_directories'
 
 module Src
   class ValidationService
@@ -39,7 +43,13 @@ module Src
     end
 
     def set_course_metadata_config
-      @course_metadata_config = YAML.load_file(File.join(app_root, "courses.yml"))
+      courses_config_path = File.join(app_root, "courses.yml")
+      if !File.exist?(courses_config_path)
+        raise "courses.yml does not exist"
+      end
+      @course_metadata_config = YAML.load_file(courses_config_path)
+    rescue Psych::SyntaxError => e
+      raise "Error parsing courses.yml: #{e}"
     end
 
     def set_course_directories
@@ -56,6 +66,31 @@ module Src
       end
       validate_uniqueness_of_course_slugs
       validate_course_metadata_config_matches_course_directories
+      course_directories.each do |course_directory|
+        chapters_config = load_chapters_config(course_directory)
+        chapter_directories = Dir[File.join(course_directory, "chapters", "*")].select { |f| File.directory? f }
+        course_base_directory_name = File.basename(course_directory)
+
+        chapters_config.each_with_index do |chapter_data, chapter_index|
+          validate_chapter_name_present(chapter_data, chapter_index, course_base_directory_name)
+          validate_chapter_slug_present(chapter_data, chapter_index, course_base_directory_name)
+        end
+        validate_uniqueness_of_chapter_slugs(chapters_config, course_base_directory_name)
+        validate_chapters_data_matches_chapter_directories(chapters_config, chapter_directories, course_base_directory_name)
+      end
+    end
+
+    def load_chapters_config(course_directory)
+      chapters_config_path = File.join(course_directory, "chapters.yml")
+      course_base_directory_name = File.basename(course_directory)
+
+      if !File.exist?(chapters_config_path)
+        raise "chapters.yml does not exist in #{course_base_directory_name}"
+      end
+
+      YAML.load_file(chapters_config_path)
+    rescue Psych::SyntaxError => e
+      raise "Error parsing chapters.yml in #{course_base_directory_name}: #{e}"
     end
 
     def validate_course_name_present(course_data, course_index)
@@ -84,6 +119,22 @@ module Src
 
     def validate_course_metadata_config_matches_course_directories
       Src::ConfigRules::CoursesMetadataMatchesCourseDirectories.new(course_metadata_config, course_directories).process
+    end
+
+    def validate_chapter_name_present(chapter_data, chapter_index, course_base_directory_name)
+      Src::ConfigRules::ChapterNamePresent.new(chapter_data, chapter_index, course_base_directory_name).process
+    end
+
+    def validate_chapter_slug_present(chapter_data, chapter_index, course_base_directory_name)
+      Src::ConfigRules::ChapterSlugPresent.new(chapter_data, chapter_index, course_base_directory_name).process
+    end
+
+    def validate_uniqueness_of_chapter_slugs(chapters_data, course_base_directory_name)
+      Src::ConfigRules::ChapterSlugsUnique.new(chapters_data, course_base_directory_name).process
+    end
+
+    def validate_chapters_data_matches_chapter_directories(chapters_data, chapter_directories, course_base_directory_name)
+      Src::ConfigRules::ChaptersDataMatchesChapterDirectories.new(chapters_data, chapter_directories, course_base_directory_name).process
     end
   end
 end
