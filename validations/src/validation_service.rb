@@ -68,8 +68,8 @@ module Src
         validate_course_name_present(course_data, course_index)
         validate_course_slug_present(course_data, course_index)
         validate_course_published_present(course_data, course_index)
-        validate_course_logo_exists_if_specified(course_data, course_index)
-        validate_course_home_logo_exists_if_specified(course_data, course_index)
+        validate_course_logo_exists_if_specified(course_data, course_index) if course_data["logo"]
+        validate_course_home_logo_exists_if_specified(course_data, course_index) if course_data["home_logo"]
       end
       validate_uniqueness_of_course_slugs
       validate_course_metadata_config_matches_course_directories
