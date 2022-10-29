@@ -14,6 +14,8 @@ require_relative './config_rules/page_slug_present'
 require_relative './config_rules/page_type_present'
 require_relative './config_rules/page_slugs_unique'
 require_relative './config_rules/pages_data_matches_page_files'
+require_relative './config_rules/page_editor_tags_valid'
+require_relative './config_rules/page_image_tags_valid'
 
 module Src
   class ValidationService
@@ -96,6 +98,11 @@ module Src
 
           validate_uniqueness_of_page_slugs(pages_config, course_base_directory_name, chapter_base_directory_name)
           validate_pages_data_matches_page_files(pages_config, page_files, course_base_directory_name, chapter_base_directory_name)
+
+          page_files.each do |page_file|
+            validate_page_editor_tags(page_file, course_base_directory_name, chapter_base_directory_name)
+            validate_page_image_tags(page_file, course_base_directory_name, chapter_base_directory_name)
+          end
         end
       end
     end
@@ -188,6 +195,14 @@ module Src
 
     def validate_pages_data_matches_page_files(pages_data, page_files, course_base_directory_name, chapter_base_directory_name)
       Src::ConfigRules::PagesDataMatchesPageFiles.new(pages_data, page_files, course_base_directory_name, chapter_base_directory_name).process
+    end
+
+    def validate_page_editor_tags(page_file, course_base_directory_name, chapter_base_directory_name)
+      Src::ConfigRules::PageEditorTagsValid.new(page_file, course_base_directory_name, chapter_base_directory_name, databases_path).process
+    end
+
+    def validate_page_image_tags(page_file, course_base_directory_name, chapter_base_directory_name)
+      Src::ConfigRules::PageImageTagsValid.new(page_file, course_base_directory_name, chapter_base_directory_name, images_path).process
     end
   end
 end

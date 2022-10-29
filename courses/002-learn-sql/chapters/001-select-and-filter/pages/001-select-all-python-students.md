@@ -2,6 +2,8 @@ Find all the students who are enrolled in the _Python_ course.
 
 We need to use `where` condition.
 
+<Image>learn-sql.svg</Image>
+
 <Editor lang="sql" dbName="students1.db">
 <code>
 SELECT *
