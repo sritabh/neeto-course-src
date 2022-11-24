@@ -64,6 +64,7 @@ module Src
     end
 
     def validate_course_data
+      validate_uniqueness_of_course_slugs
       course_metadata_config.each_with_index do |course_data, course_index|
         validate_course_name_present(course_data, course_index)
         validate_course_slug_present(course_data, course_index)
@@ -71,32 +72,31 @@ module Src
         validate_course_logo_exists_if_specified(course_data, course_index) if course_data["logo"]
         validate_course_home_logo_exists_if_specified(course_data, course_index) if course_data["home_logo"]
       end
-      validate_uniqueness_of_course_slugs
       validate_course_metadata_config_matches_course_directories
+
       course_directories.each do |course_directory|
         chapters_config = load_chapters_config(course_directory)
         chapter_directories = Dir[File.join(course_directory, "chapters", "*")].select { |f| File.directory? f }
         course_base_directory_name = File.basename(course_directory)
 
+        validate_uniqueness_of_chapter_slugs(chapters_config, course_base_directory_name)
         chapters_config.each_with_index do |chapter_data, chapter_index|
           validate_chapter_name_present(chapter_data, chapter_index, course_base_directory_name)
           validate_chapter_slug_present(chapter_data, chapter_index, course_base_directory_name)
         end
-        validate_uniqueness_of_chapter_slugs(chapters_config, course_base_directory_name)
         validate_chapters_data_matches_chapter_directories(chapters_config, chapter_directories, course_base_directory_name)
 
         chapter_directories.each do |chapter_directory|
           pages_config = load_pages_config(chapter_directory, course_base_directory_name)
           page_files = Dir[File.join(chapter_directory, "pages", "*.md")].select { |f| File.file? f }
-
           chapter_base_directory_name = File.basename(chapter_directory)
+
+          validate_uniqueness_of_page_slugs(pages_config, course_base_directory_name, chapter_base_directory_name)
           pages_config.each_with_index do |page_data, page_index|
             validate_page_title_present(page_data, page_index, course_base_directory_name, chapter_base_directory_name)
             validate_page_slug_present(page_data, page_index, course_base_directory_name, chapter_base_directory_name)
             validate_page_type_present(page_data, page_index, course_base_directory_name, chapter_base_directory_name)
           end
-
-          validate_uniqueness_of_page_slugs(pages_config, course_base_directory_name, chapter_base_directory_name)
           validate_pages_data_matches_page_files(pages_config, page_files, course_base_directory_name, chapter_base_directory_name)
 
           page_files.each do |page_file|
