@@ -1,0 +1,8 @@
+name: Learn Javascript
+subheading: Learn Javascript by actually writing Javascript code
+slug: learn-javascript
+published: true
+home_logo: javascript.svg
+logo: javascript-header-image.png
+custom_data:
+  key: javascript
