@@ -1,8 +1,9 @@
+---
 - name: Select and filter
   slug: select-and-filter
 - name: NULL value
   slug: null-value
 - name: SUM and AVG
   slug: sum-and-average
-
-
+- name: SQL sample course
+  slug: sql-sample-course

@@ -1,8 +1,7 @@
+---
 name: Learn SQL
 subheading: Learn SQL by actually writing SQL code
 slug: learn-sql
 published: true
 home_logo: learn-sql.svg
 logo: sql-header-image.png
-custom_data:
-  key: sql

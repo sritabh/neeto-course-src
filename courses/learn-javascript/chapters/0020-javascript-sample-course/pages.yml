@@ -1,0 +1,19 @@
+---
+- title: Fix precision of decimal numbers
+  slug: to-fixed
+  page_type: lesson
+- title: Exercise - Fix precision of decimal numbers
+  slug: exercise-to-fixed
+  page_type: exercise
+- title: ComprehensiveExercise - Access code in inner function
+  slug: comprehensive-exercise-access-code-in-inne-function
+  page_type: assessment
+- title: Show message in console
+  slug: console
+  page_type: lesson
+- title: Exercise - Show message in console
+  slug: exercise-console-3
+  page_type: exercise
+- title: ComprehensiveExercise - Print all Unique Words
+  slug: comprehensive-exercise-print-all-unique-words
+  page_type: assessment

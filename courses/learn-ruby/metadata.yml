@@ -1,8 +1,7 @@
+---
 name: Learn Ruby
 subheading: Learn Ruby by actually writing Ruby code
 slug: learn-ruby
 published: true
 home_logo: ruby.svg
 logo: ruby-header-image.png
-custom_data:
-  key: ruby

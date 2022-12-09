@@ -1,5 +1,7 @@
+---
 - name: Getting started
   slug: getting-started
 - name: Convert String into Array
   slug: convert-string-into-array
-
+- name: Ruby sample course
+  slug: ruby-sample-course

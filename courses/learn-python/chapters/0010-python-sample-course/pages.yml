@@ -1,0 +1,10 @@
+---
+- title: Chaining Operators
+  slug: chaining-operators
+  page_type: lesson
+- title: Exercise 1 - Chaining Operators
+  slug: exercise-1-chaining-operators
+  page_type: exercise
+- title: ComprehensiveExercise - Build a currency notes calculator
+  slug: build-a-currency-notes-calculator
+  page_type: assessment

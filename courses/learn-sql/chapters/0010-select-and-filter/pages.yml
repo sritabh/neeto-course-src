@@ -1,0 +1,7 @@
+---
+- title: Select all Python students
+  slug: select-all-python-students
+  page_type: lesson
+- title: Exercise - Find all students who are enrolled in JavaScript course
+  slug: exercise-find-all-students-enrolled-in-javascript-course
+  page_type: exercise

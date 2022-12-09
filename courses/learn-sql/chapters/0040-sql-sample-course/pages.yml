@@ -1,0 +1,19 @@
+---
+- title: SELECT DISTINCT
+  slug: select-distinct
+  page_type: lesson
+- title: Exercise - SELECT distinct
+  slug: exercise-select-distinct
+  page_type: exercise
+- title: Exercise - VIEWS - 2
+  slug: exercise-views-2
+  page_type: exercise
+- title: Exercise - CREATE TABLE - Data types
+  slug: exercise-create-table-data-types
+  page_type: exercise
+- title: Exercise - Deleting tables
+  slug: exercise-deleting-tables
+  page_type: exercise
+- title: Exercise - Renaming tables
+  slug: exercise-renaming-tables
+  page_type: exercise

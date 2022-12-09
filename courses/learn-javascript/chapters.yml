@@ -1,3 +1,5 @@
+---
 - name: Array
   slug: array
-
+- name: JavaScript sample course
+  slug: javascript-sample-course

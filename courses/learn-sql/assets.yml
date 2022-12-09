@@ -1,0 +1,11 @@
+---
+images:
+- learn-sql.svg
+- sql-header-image.png
+- sql_sum.png
+databases:
+- students1.db
+- students2-v1.db
+- students3-v1.db
+- students3-v3.db
+- students3-v2.db

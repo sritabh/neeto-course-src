@@ -1,0 +1,25 @@
+---
+- title: Table Header Row
+  slug: table-header-row
+  page_type: lesson
+- title: Exercise - Table Header Row
+  slug: exercise-table-header-row
+  page_type: exercise
+- title: nth Child
+  slug: nth-child
+  page_type: lesson
+- title: Exercise - nth child
+  slug: exercise-nth-child
+  page_type: exercise
+- title: Using querySelectorAll
+  slug: selecting-dom-elements-using-query-selector-all
+  page_type: lesson
+- title: Exercise - Using querySelectorAll
+  slug: exercise-selecting-dom-elements-using-query-selector-all
+  page_type: exercise
+- title: Exercise - Listening to Browser Events
+  slug: exercise-listening-to-browser-events
+  page_type: exercise
+- title: Exercise - `alt` in `img` Tag
+  slug: exercise-alt-in-img-tag
+  page_type: exercise
