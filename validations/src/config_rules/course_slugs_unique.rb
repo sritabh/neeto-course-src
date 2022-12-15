@@ -3,17 +3,17 @@ require_relative './base'
 module Src
   module ConfigRules
     class CourseSlugsUnique < Src::ConfigRules::Base
-      attr_reader :courses_data
+      attr_reader :course_directories
 
-      def initialize(courses_data)
-        @courses_data = courses_data
+      def initialize(course_directories)
+        @course_directories = course_directories
         @error_message = ""
       end
 
       def rule_verified?
         rule_verified = true
 
-        all_course_slugs = courses_data.map { |course| course["slug"] }
+        all_course_slugs = load_all_course_slugs
         unique_course_slugs = all_course_slugs.uniq
 
         if all_course_slugs.length != unique_course_slugs.length
@@ -23,6 +23,23 @@ module Src
         end
 
         return rule_verified
+      end
+
+      private
+
+      def load_all_course_slugs
+        course_directories.map do |course_directory|
+          course_metadata_path = File.join(course_directory, "metadata.yml")
+          course_base_directory_name = File.basename(course_directory)
+    
+          if !File.exist?(course_metadata_path)
+            raise "metadata.yml does not exist in #{course_base_directory_name}"
+          end
+          metadata = YAML.load_file(course_metadata_path)
+          metadata["slug"]
+        rescue Psych::SyntaxError => e
+          raise "Error parsing metadata.yml in #{course_base_directory_name}: #{e}"
+        end
       end
     end
   end
