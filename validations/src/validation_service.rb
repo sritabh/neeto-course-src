@@ -3,8 +3,6 @@ require_relative './config_rules/course_name_present'
 require_relative './config_rules/course_slug_present'
 require_relative './config_rules/course_published_present'
 require_relative './config_rules/course_image_exists'
-require_relative './config_rules/course_slugs_unique'
-require_relative './config_rules/courses_metadata_matches_course_directories'
 require_relative './config_rules/chapter_name_present'
 require_relative './config_rules/chapter_slug_present'
 require_relative './config_rules/chapter_slugs_unique'
@@ -54,7 +52,6 @@ module Src
     end
 
     def validate_course_data
-      validate_uniqueness_of_course_slugs
 
       course_directories.each_with_index do |course_directory, course_index|
         ###################### course_metadata_validation ######################
@@ -65,7 +62,6 @@ module Src
         validate_course_published_present(course_data, course_index)
         validate_course_logo_exists_if_specified(course_data, course_index, course_directory, course_assets_config) if course_data["logo"]
         validate_course_home_logo_exists_if_specified(course_data, course_index, course_directory, course_assets_config) if course_data["home_logo"]
-        validate_course_metadata_config_matches_course_directories(course_data, course_directory)
 
         ##################### chapters_config_validation ######################
         chapters_config = load_chapters_config(course_directory)
@@ -171,14 +167,6 @@ module Src
 
     def validate_course_home_logo_exists_if_specified(course_data, course_index, course_directory, course_assets_config)
       Src::ConfigRules::CourseImageExists.new(course_data, course_index, "home_logo", images_path, course_directory, course_assets_config).process
-    end
-
-    def validate_uniqueness_of_course_slugs
-      Src::ConfigRules::CourseSlugsUnique.new(course_directories).process
-    end
-
-    def validate_course_metadata_config_matches_course_directories(course_data, course_directory)
-      Src::ConfigRules::CoursesMetadataMatchesCourseDirectories.new(course_data, course_directory).process
     end
 
     def validate_chapter_name_present(chapter_data, chapter_index, course_base_directory_name)
