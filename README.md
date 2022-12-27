@@ -6,37 +6,58 @@ You can fork this repository and use it as a template for your own courses.
 
 ## Format
 
-### 1. `courses.yml` ###
-This file at the root of the repository contains the list of courses and their data. It is a YAML file with the following structure:
+### 1. `assets` directory ###
+This directory contains the unique assets for the courses. It contains the following sub-directories:
+
+- `images`: This contains all the images used in the course. The images can be used in the markdown files in `pages` and also in `metadata.yml` in courses as home logos and logos.
+
+- `databases`: This contains the `.db` files used in the course pages when an editor makes use of `sql` and needs a database as a base for running/testing queries.
+
+
+### 2. `courses` directory ###
+This directory contains the courses data.
+Each course should be stored in a separate directory inside `courses`, with a preferrably slugified name/reference to a course, but there is no restriction.
+
+For example, the template repository here contains five courses, referenced by `learn-ruby`, `learn-javascript` and so on.
+
+Each course directory should contain the following contents:
+
+#### 2.1. `assets.yml` file ####
+This file should contain the assets used in the course. It is a YAML file with the following structure:
 
 ```yaml
-- name: Learn Ruby
-  subheading: Learn Ruby by actually writing Ruby code
-  slug: learn-ruby
-  published: true
-  home_logo: ruby.svg
-  logo: ruby-header-image.png
-  custom_data:
-    key: ruby
-- name: Learn SQL
-  subheading: Learn SQL by actually writing SQL code
-  slug: learn-sql
-  published: true
-  home_logo: learn-sql.svg
-  logo: sql-header-image.png
-  custom_data:
-    key: sql
-- name: Learn Javascript
-  subheading: Learn Javascript by actually writing Javascript code
-  slug: learn-javascript
-  published: true
-  home_logo: javascript.svg
-  logo: javascript-header-image.png
-  custom_data:
-    key: javascript
+---
+images:
+- learn-sql.svg
+- sql-header-image.png
+- sql_sum.png
+databases:
+- students1.db
+- students2-v1.db
+- students3-v1.db
+- students3-v3.db
+- students3-v2.db
 ```
 
-Each course in `courses.yml` contains the following fields:
+All images that we want to use in the course should be listed in the `images` array. Similarly, all databases that we want to use in the course should be listed in the `databases` array.
+If you want to use an image or database in the course, it should also be present in the `assets` directory in the repository root.
+
+#### 2.2. `metadata.yml` file ####
+This file should contain the metadata/properties of the course. It is a YAML file with the following structure:
+
+```yaml
+---
+name: Learn HTML
+subheading: Learn HTML by actually writing HTML
+slug: learn-html
+published: false
+home_logo: javascript.svg
+logo: html-header-image.png
+custom_data:
+  key: html
+```
+
+Here are the validations on these fields:
 
 - *name*: *(required)* *(string)* The name of the course
 - *subheading*: *(optional)* *(string)* The subheading/description of the course
@@ -46,12 +67,7 @@ Each course in `courses.yml` contains the following fields:
 - *logo*: *(optional)* *(string)* The name of the logo file to be used on the course page. A file with the same name should be present in the `assets/images` directory, if specified.
 - *custom_data*: *(optional)* *(object)* A custom object containing any custom data that you want to store for the course. This can be used to store any custom data that you want to use in your application.
 
-### 2. `courses` directory ###
-This directory contains the courses data. Each course should be stored in a separate directory inside `courses`, with the name starting with a number followed by a hyphen and then the slug of the course. Additionally, the names of course directories should be in the same order as they would be in `courses.yml`. For example, if you have 3 courses with slugs `learn-ruby`, `learn-sql` and `learn-javascript` in that order, then a valid naming scheme for the course directories can be  `1-learn-ruby`, `2-learn-sql` and `3-learn-javascript`.
-
-Each course directory should contain the following files:
-
-#### 2.1. `chapters.yml` ####
+#### 2.3. `chapters.yml` file ####
 This file at the root of each course directory inside `courses`, contains the list of chapters within the course and their data. It is a YAML file with the following structure:
 
 ```yaml
@@ -66,12 +82,14 @@ Each chapter in `chapters.yml` contains the following fields:
 - *name*: *(required)* *(string)* The name of the chapter
 - *slug*: *(required)* *(string)* The slug of the chapter. This is used to generate the URL of the chapter. This should be unique for each chapter within a course.
 
-#### 2.2. `chapters` directory ####
-This directory inside each course directory contains the chapters data. Each chapter should be stored in a separate directory inside `chapters`, with the name starting with a number followed by a hyphen and then the slug of the chapter. Additionally, the names of chapter directories should be in the same order as they would be in `chapters.yml`. For example, if you have 2 chapters with slugs `getting-started`and `convert-string-into-array` in that order, then a valid naming scheme for the chapter directories can be  `1-getting-started` and `2-convert-string-into-array`.
+#### 2.4. `chapters` directory ####
+This directory inside each course directory contains the chapters data.
+Each chapter should be stored in a separate directory inside `chapters`, with the name starting with a number followed by a hyphen and then the slug of the chapter.
+Additionally, the names of chapter directories should be in the same order as they would be in `chapters.yml`. For example, if you have 2 chapters with slugs `getting-started`and `convert-string-into-array` in that order, then a valid naming scheme for the chapter directories can be  `1-getting-started` and `2-convert-string-into-array`.
 
 Each chapter directory should contain the following files:
 
-##### 2.2.1. `pages.yml` #####
+##### 2.4.1. `pages.yml` #####
 This file at the root of each chapter directory inside `chapters`, contains the list of pages within the chapter and their data. It is a YAML file with the following structure:
 
 ```yaml
@@ -89,17 +107,24 @@ Each page in `pages.yml` contains the following fields:
 - *slug*: *(required)* *(string)* The slug of the page. This is used to generate the URL of the page. This should be unique for each page within a chapter.
 - *page_type*: *(required)* *(string)* The type of page. This can be either `lesson`, `exercise` or `assessment`.
 
-##### 2.2.2. `pages` directory #####
-This directory inside each chapter directory contains the pages data. Each page should be stored in a separate markdown (`.md`) file inside `pages`, with the file name starting with a number followed by a hyphen and then the slug of the page. Additionally, the names of page files should be in the same order as they would be in `pages.yml`. For example, if you have 2 pages with slugs `convert-a-string-into-an-array` and `exercise-string-to-array` in that order, then a valid naming scheme for the page files can be  `1-convert-a-string-into-an-array` and `2-exercise-string-to-array`.
+##### 2.4.2. `pages` directory #####
+This directory inside each chapter directory contains the pages data.
+
+Each page should be stored in a separate markdown (`.md`) file inside `pages`, with the file name starting with a number followed by a hyphen and then the slug of the page.
+
+Additionally, the names of page files should be in the same order as they would be in `pages.yml`. For example, if you have 2 pages with slugs `convert-a-string-into-an-array` and `exercise-string-to-array` in that order, then a valid naming scheme for the page files can be  `1-convert-a-string-into-an-array` and `2-exercise-string-to-array`.
 
 Each markdown file in `pages` should contain just the content of the page in markdown fashion.
 
+## Commit hook validations
 
-### 3. `assets` directory ###
-This directory contains the assets for the courses. It contains the following sub-directories:
+To make sure the data is valid, we have a commit hook that runs validations on the data on each commit made to the repository. If the data is not valid, the hook will fail.
 
-- `images`: This contains all the images used in the course. The images can be used in the markdown files in `pages` and also in `courses.yml` as home logos and logos.
-- `databases`: This contains the db files used in the course pages when an editor makes use of `sql` and needs a database as a base for running/testing queries.
+To set up the hook, run the following commands in the root of the repository:
 
+```sh
+bundle install
+yarn install
+```
 
-
+After this, the hook will be set up and will run on each commit. The error messages, if a validation fails are quite verbose and should be self-explanatory. They are mostly related to the validations mentioned in the Format section.
