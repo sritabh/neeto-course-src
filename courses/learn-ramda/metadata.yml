@@ -1,0 +1,12 @@
+---
+name: Ramda
+subheading: Learn ramda
+slug: learn-ramda
+published: true
+custom_data:
+  type: javascript
+  upcoming: false
+  newCourse: false
+  courseColor: border-gray-600
+home_logo: javascript.svg
+logo: javascript-header-image.png
