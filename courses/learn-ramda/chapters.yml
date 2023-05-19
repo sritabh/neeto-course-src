@@ -1,0 +1,7 @@
+---
+- name: Basic
+  slug: ramda-part-one
+  has_pages: true
+- name: Intermediate
+  slug: ramda-part-two
+  has_pages: false
