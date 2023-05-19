@@ -75,12 +75,14 @@ This file at the root of each course directory inside `courses`, contains the li
   slug: getting-started
 - name: Convert String into Array
   slug: convert-string-into-array
+  has_pages: false
 ```
 
 Each chapter in `chapters.yml` contains the following fields:
 
 - *name*: *(required)* *(string)* The name of the chapter
 - *slug*: *(required)* *(string)* The slug of the chapter. This is used to generate the URL of the chapter. This should be unique for each chapter within a course.
+- *has_pages*: *(optional)* *(boolean)* Determines if the chapter has pages associated with it or not.True by default.
 
 #### 2.4. `chapters` directory ####
 This directory inside each course directory contains the chapters data.
@@ -115,6 +117,9 @@ Each page should be stored in a separate markdown (`.md`) file inside `pages`, w
 Additionally, the names of page files should be in the same order as they would be in `pages.yml`. For example, if you have 2 pages with slugs `convert-a-string-into-an-array` and `exercise-string-to-array` in that order, then a valid naming scheme for the page files can be  `1-convert-a-string-into-an-array` and `2-exercise-string-to-array`.
 
 Each markdown file in `pages` should contain just the content of the page in markdown fashion.
+
+##### 2.4.3. `index.md` file #####
+This file contains the content of the chapter.The content can be of the same format as page content.Chapter content supports fragments which you can define using `##`.This will create a section on the chapter.
 
 ## Commit hook validations
 
