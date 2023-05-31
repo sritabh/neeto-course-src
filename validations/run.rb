@@ -1,10 +1,3 @@
-require 'colorize'
-require_relative './src/validation_service'
+require 'neeto-course-config-validator'
 
-puts "Running validations".yellow
-puts ("-" * 80).yellow
-puts "\n"
-
-Src::ValidationService.new.process
-
-
+NeetoCourseConfigValidator::Validator.new.validate_config
