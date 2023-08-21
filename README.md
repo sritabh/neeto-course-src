@@ -1,22 +1,21 @@
 # neeto-course-src
 
-This repository contains the format in which the course data should be stored, if you choose to keep the source of your neetoCourse courses as a github repository.
-
-You can fork this repository and use it as a template for your own courses.
+If you are using [neetoCourse](https://www.neeto.com/neetocourse) and want your course materials to be in GitHub then
+this repo serves as the template repo. You can fork this repo and you can make the necessary changes.
 
 ## Format
 
 ### 1. `assets` directory ###
-This directory contains the unique assets for the courses. It contains the following sub-directories:
+This directory contains unique assets for the courses. It contains the following sub-directories:
 
 - `images`: This contains all the images used in the course. The images can be used in the markdown files in `pages` and also in `metadata.yml` in courses as home logos and logos.
 
-- `databases`: This contains the `.db` files used in the course pages when an editor makes use of `sql` and needs a database as a base for running/testing queries.
+- `databases`: This contains the `.db` files used in the course pages when an editor uses `sql` and needs a database as a base for running/testing queries.
 
 
 ### 2. `courses` directory ###
 This directory contains the courses data.
-Each course should be stored in a separate directory inside `courses`, with a preferrably slugified name/reference to a course, but there is no restriction.
+Each course should be stored in a separate directory inside `courses`, with a preferably slugified name/reference to a course, but there is no restriction.
 
 For example, the template repository here contains five courses, referenced by `learn-ruby`, `learn-javascript` and so on.
 
@@ -116,10 +115,10 @@ Each page should be stored in a separate markdown (`.md`) file inside `pages`, w
 
 Additionally, the names of page files should be in the same order as they would be in `pages.yml`. For example, if you have 2 pages with slugs `convert-a-string-into-an-array` and `exercise-string-to-array` in that order, then a valid naming scheme for the page files can be  `1-convert-a-string-into-an-array` and `2-exercise-string-to-array`.
 
-Each markdown file in `pages` should contain just the content of the page in markdown fashion.
+Each markdown file in `pages` should contain just the content of the page in a markdown fashion.
 
 ##### 2.4.3. `index.md` file #####
-This file contains the content of the chapter.The content can be of the same format as page content.Chapter content supports fragments which you can define using `##`.This will create a section on the chapter.
+This file contains the content of the chapter. The content can be of the same format as page content. Chapter content supports fragments that you can define using `##`.This will create a section on the chapter.
 
 ## Commit hook validations
 
