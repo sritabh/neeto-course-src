@@ -54,6 +54,7 @@ home_logo: javascript.svg
 logo: html-header-image.png
 custom_data:
   key: html
+show_google_login: true
 ```
 
 Here are the validations on these fields:
@@ -65,6 +66,7 @@ Here are the validations on these fields:
 - *home_logo*: *(optional)* *(string)* The name of the logo file to be used on the home page. A file with the same name should be present in the `assets/images` directory, if specified.
 - *logo*: *(optional)* *(string)* The name of the logo file to be used on the course page. A file with the same name should be present in the `assets/images` directory, if specified.
 - *custom_data*: *(optional)* *(object)* A custom object containing any custom data that you want to store for the course. This can be used to store any custom data that you want to use in your application.
+- *show_google_login*: *(optional)* *(boolean)* Specifies if the 'Login with Google' button needs to be shown for the course, if set to true, the button will be shown only if Google login is enabled in organization level, defaults to true.
 
 #### 2.3. `chapters.yml` file ####
 This file at the root of each course directory inside `courses`, contains the list of chapters within the course and their data. It is a YAML file with the following structure:
