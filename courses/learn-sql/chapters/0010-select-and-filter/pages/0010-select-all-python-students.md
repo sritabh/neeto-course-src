@@ -1,4 +1,4 @@
-Find all the students who are enrolled in the _Python_ course.
+Find all the students who are enrolled in the _Python_ course.(EDITED)
 
 We need to use `where` condition.
 
